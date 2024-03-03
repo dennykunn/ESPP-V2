@@ -18,7 +18,7 @@
                 "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands",
                     "simple-line-icons"
                 ],
-                urls: ['assets/css/fonts.min.css']
+                urls: ['../assets/css/fonts.min.css']
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -57,11 +57,8 @@
                     </button>
                 </div>
             </div>
-            <!-- End Logo Header -->
 
-            <!-- Navbar Header -->
             <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-
                 <div class="container-fluid">
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         <li class="nav-item dropdown hidden-caret">
@@ -217,7 +214,6 @@
                     </ul>
                 </div>
             </nav>
-            <!-- End Navbar -->
         </div>
 
         <!-- Sidebar -->
@@ -260,56 +256,57 @@
                         </div>
                     </div>
                     <ul class="nav nav-primary">
-                        <li class="nav-item active">
-                            <a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                        @php
+                            $url = url()->current();
+                            $path = parse_url($url, PHP_URL_PATH);
+                        @endphp
+
+                        <li class="nav-item {{ $path == '' ? 'active' : '' }}">
+                            <a href="{{ route('dashboard') }}" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-section">
-                            <span class="sidebar-mini-icon">
-                                <i class="fa fa-ellipsis-h"></i>
-                            </span>
-                            <h4 class="text-section">Components</h4>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#base">
+                        <li class="nav-item {{ $path == '/pembayaran' ? 'active' : '' }}">
+                            <a href="{{ route('pembayaran') }}">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 <p>Pembayaran</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#sidebarLayouts">
+                        <li class="nav-item {{ $path == '/data-pembayaran' ? 'active' : '' }}">
+                            <a href="{{ route('data-pembayaran') }}">
                                 <i class="far fa-calendar-alt"></i>
                                 <p>Data Pembayaran </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a data-toggle="collapse" href="#forms">
+                        <li class="nav-item {{ $path == '/users' ? 'active' : '' }}">
+                            <a href="{{ route('users') }}">
                                 <i class="fas fa-user-friends"></i>
                                 <p>Data User</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li
+                            class="nav-item {{ $path == '/manajemen-data/tahun-akademik' || $path == '/manajemen-data/kelas' || $path == '/manajemen-data/pembayaran-perbulan' ? 'active' : '' }}">
                             <a data-toggle="collapse" href="#tables">
                                 <i class="fas fa-table"></i>
-                                <p>Management Data</p>
+                                <p>Manajemen Data</p>
                                 <span class="caret"></span>
                             </a>
-                            <div class="collapse" id="tables">
+                            <div class="collapse {{ $path == '/manajemen-data/tahun-akademik' || $path == '/manajemen-data/kelas' || $path == '/manajemen-data/pembayaran-perbulan' ? 'show' : '' }}"
+                                id="tables">
                                 <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="tables/tables.html">
+                                    <li class="{{ $path == '/manajemen-data/tahun-akademik' ? 'active' : '' }}">
+                                        <a href="{{ route('tahun-akademik') }}">
                                             <span class="sub-item">Tahun Akademik</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="tables/datatables.html">
-                                            <span class="sub-item">kelas</span>
+                                    <li class="{{ $path == '/manajemen-data/kelas' ? 'active' : '' }}">
+                                        <a href="{{ route('kelas') }}">
+                                            <span class="sub-item">Kelas</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="tables/datatables.html">
+                                    <li class="{{ $path == '/manajemen-data/pembayaran-perbulan' ? 'active' : '' }}">
+                                        <a href="{{ route('pembayaran-perbulan') }}">
                                             <span class="sub-item">Pembayaran Perbulan</span>
                                         </a>
                                     </li>
