@@ -319,30 +319,7 @@
         </div>
         <!-- End Sidebar -->
 
-        <div class="main-panel">
-            <div class="content">
-                <div class="panel-header bg-primary-gradient">
-                    <div class="page-inner py-5">
-                        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                            <div>
-                                <h2 class="text-white pb-2 fw-bold">@yield('breadcrumb-title')</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @yield('content')
-
-            </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="copyright mx-auto">
-                        2024, made with <i class="fa fa-heart heart text-danger"></i> by
-                        <a>Denny Firmansyah</a>
-                    </div>
-                </div>
-            </footer>
-        </div>
+        @yield('content')
 
         <!-- Custom template | don't include it in your project! -->
         <div class="custom-template">
