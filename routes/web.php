@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataPembayaranController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ManajemenData\KelasController;
+use App\Http\Controllers\ManajemenData\TahunAkademikController;
 use App\Http\Controllers\ManajemenData\PembayaranPerbulanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\UsersController;
@@ -30,7 +31,7 @@ Route::get('/data-pembayaran', [DataPembayaranController::class, 'index'])->name
 
 Route::get('/users', [UsersController::class, 'index'])->name('users');
 
-Route::get('/manajemen-data/tahun-akademik', [PembayaranPerbulanController::class, 'index'])->name('tahun-akademik');
+Route::get('/manajemen-data/tahun-akademik', [TahunAkademikController::class, 'index'])->name('tahun-akademik');
 
 Route::get('/manajemen-data/kelas', [KelasController::class, 'index'])->name('kelas');
 
