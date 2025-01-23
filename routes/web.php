@@ -21,18 +21,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MainController::class, 'dashboard'])->name('dashboard');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'process_login'])->name('process_login');
 
-Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');
-
-Route::get('/data-pembayaran', [DataPembayaranController::class, 'index'])->name('data-pembayaran');
-
-Route::get('/users', [UsersController::class, 'index'])->name('users');
-
-Route::get('/manajemen-data/tahun-akademik', [TahunAkademikController::class, 'index'])->name('tahun-akademik');
-
-Route::get('/manajemen-data/kelas', [KelasController::class, 'index'])->name('kelas');
-
-Route::get('/manajemen-data/pembayaran-perbulan', [PembayaranPerbulanController::class, 'index'])->name('pembayaran-perbulan');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::resource('/pembayaran', PembayaranController::class);
+    Route::resource('/data-pembayaran', DataPembayaranController::class);
+    Route::resource('/users', UsersController::class);
+    Route::put('/users/password/{id}', [UsersController::class, 'update_password'])->name('users.update.password');
+    Route::prefix('manajemen-data')->group(function () {
+        Route::resource('tahun-akademik', TahunAkademikController::class);
+        Route::resource('kelas', KelasController::class);
+        Route::resource('pembayaran-perbulan', PembayaranPerbulanController::class);
+    });
+});

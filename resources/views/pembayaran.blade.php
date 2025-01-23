@@ -23,12 +23,12 @@
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
-                                                <th>NAMA MURID</th>
-                                                <th>PEMBAYARAN BULAN</th>
-                                                <th>JUMLAH PEMBAYARAN</th>
-                                                <th>TANGGAL PEMBAYARAN</th>
+                                                <th style="text-wrap: nowrap">NAMA MURID</th>
+                                                <th style="text-wrap: nowrap">PEMBAYARAN BULAN</th>
+                                                <th style="text-wrap: nowrap">JUMLAH PEMBAYARAN</th>
+                                                <th style="text-wrap: nowrap">TANGGAL PEMBAYARAN</th>
                                                 <th>METODE</th>
-                                                <th>BUKTI PEMBAYARAN</th>
+                                                <th style="text-wrap: nowrap">BUKTI PEMBAYARAN</th>
                                                 <th>KETERANGAN</th>
                                                 <th>STATUS</th>
                                                 <th>ACTION</th>
@@ -49,36 +49,6 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Tom</td>
-                                                <td>Maret - April</td>
-                                                <td>100.000</td>
-                                                <td>3 Maret 2024</td>
-                                                <td>Transfer</td>
-                                                <td></td>
-                                                <td>Pembayaran bulan Maret dan April</td>
-                                                <td>SUKSES</td>
-                                                <td class="d-flex justify-content-center align-items-xl-center ">
-                                                    <a class="mr-2" href="">EDIT</a>
-                                                    <a href="">DELETE</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Tom</td>
-                                                <td>Maret - April</td>
-                                                <td>100.000</td>
-                                                <td>3 Maret 2024</td>
-                                                <td>Transfer</td>
-                                                <td></td>
-                                                <td>Pembayaran bulan Maret dan April</td>
-                                                <td>SUKSES</td>
-                                                <td class="d-flex justify-content-center align-items-xl-center ">
-                                                    <a class="mr-2" href="">EDIT</a>
-                                                    <a href="">DELETE</a>
-                                                </td>
-                                            </tr>
                                             <tr>
                                                 <td>1</td>
                                                 <td>Tom</td>

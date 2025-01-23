@@ -14,33 +14,138 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Data Kelas</h4>
+                                    <button type="button" class="btn btn-success" data-toggle="modal"
+                                        data-target="#addModal">Tambah</button>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="multi-filter-select" class="display table table-striped table-hover">
+                                    <table id="basic-datatables" class="display table table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
                                                 <th>NAMA</th>
                                                 <th>TAHUN AKADEMIK</th>
+                                                <th>ACTION</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>NO</th>
-                                                <th>NAMA</th>
-                                                <th>TAHUN AKADEMIK</th>
-                                            </tr>
-                                        </tfoot>
                                         <tbody>
                                             @foreach ($kelas as $key => $item)
                                                 <tr>
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $item->kode }}</td>
                                                     <td>{{ $item->tahunakademik->kode }}</td>
+                                                    <td>
+                                                        <div class="d-flex ">
+                                                            <button class="btn btn-primary mr-2" type="button"
+                                                                data-toggle="modal"
+                                                                data-target="#editModal-{{ $item->id }}">Edit</button>
+                                                            <form id="deleteForm-{{ $item->id }}"
+                                                                action="{{ route('kelas.destroy', ['kela' => $item->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn btn-danger"
+                                                                    onclick="confirmDelete({{ $item->id }})">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+
+                                    {{-- Modal Add --}}
+                                    <div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="addModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <form class="modal-content" action="{{ route('kelas.store') }}" method="POST">
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addModalLabel">
+                                                        Tambah Data Kelas
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="kode">Kode</label>
+                                                        <input type="text" class="form-control" id="kode"
+                                                            name="kode" placeholder="Enter Kode">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="tahunakademik_id">Kode</label>
+                                                        <select class="form-control input-square" id="tahunakademik_id"
+                                                            name="tahunakademik_id">
+                                                            @foreach ($tahunakademiks as $ta)
+                                                                <option value="{{ $ta->id }}">{{ $ta->kode }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Save data</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {{-- Modal Edit --}}
+                                    @foreach ($kelas as $key => $item)
+                                        <div class="modal fade" id="editModal-{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <form class="modal-content"
+                                                    action="{{ route('kelas.update', ['kela' => $item->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="editModalLabel">
+                                                            Edit Data Kelas
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="kode">Kode</label>
+                                                            <input type="text" class="form-control" id="kode"
+                                                                name="kode" placeholder="Enter Kode"
+                                                                value="{{ $item->kode }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="tahunakademik_id">Kode</label>
+                                                            <select class="form-control input-square" id="tahunakademik_id"
+                                                                name="tahunakademik_id">
+                                                                @foreach ($tahunakademiks as $ta)
+                                                                    <option value="{{ $ta->id }}"
+                                                                        {{ $item->tahunakademik_id == $ta->id ? 'selected' : '' }}>
+                                                                        {{ $ta->kode }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save data</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -56,51 +161,30 @@
     <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#multi-filter-select').DataTable({
-                "pageLength": 5,
-                initComplete: function() {
-                    this.api().columns().every(function() {
-                        var column = this;
-                        var select = $(
-                                '<select class="form-control"><option value=""></option></select>'
-                            )
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
+            $('#basic-datatables').DataTable();
+        });
 
-                                column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                            });
-
-                        column.data().unique().sort().each(function(d, j) {
-                            select.append('<option value="' + d + '">' + d +
-                                '</option>')
-                        });
-                    });
+        function confirmDelete(id) {
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                buttons: {
+                    cancel: {
+                        visible: true,
+                        text: 'No, cancel!',
+                        className: 'btn btn-danger'
+                    },
+                    confirm: {
+                        text: 'Yes, delete it!',
+                        className: 'btn btn-success'
+                    }
+                }
+            }).then((willDelete) => {
+                if (willDelete) {
+                    document.getElementById('deleteForm-' + id).submit();
                 }
             });
-
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
-
-            var action =
-                '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-            $('#addRowButton').click(function() {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                ]);
-                $('#addRowModal').modal('hide');
-
-            });
-        });
+        }
     </script>
 @endsection

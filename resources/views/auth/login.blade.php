@@ -9,11 +9,12 @@
             <div class="text-center mt-4 name">
                 ESPP
             </div>
-            <form class="p-3 mt-3" action="{{ route('dashboard') }}">
-                {{-- @csrf --}}
+            <form class="p-3 mt-3" action="{{ route('process_login') }}" method="POST">
+                @csrf
+
                 <div class="form-field d-flex align-items-center">
                     <span class="far fa-user"></span>
-                    <input type="text" name="userName" id="userName" placeholder="Username">
+                    <input type="email" name="email" id="email" placeholder="Email">
                 </div>
                 <div class="form-field d-flex align-items-center">
                     <span class="fas fa-key"></span>

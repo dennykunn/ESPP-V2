@@ -181,32 +181,35 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="../assets/img/profile.jpg" alt="..."
-                                        class="avatar-img rounded-circle">
+                                    <img src="{{ Storage::url(session('user_photo')) }}"
+                                        alt="{{ session('user_name') }}" class="avatar-img rounded-circle">
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="../assets/img/profile.jpg"
-                                                    alt="image profile" class="avatar-img rounded"></div>
+                                            <div class="avatar-lg">
+                                                <img src="{{ Storage::url(session('user_photo')) }}"
+                                                    alt="{{ session('user_name') }}" class="avatar-img rounded">
+                                            </div>
                                             <div class="u-text">
-                                                <h4>Hizrian</h4>
-                                                <p class="text-muted">hello@example.com</p><a href="profile.html"
-                                                    class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                                <h4 style="text-transform: capitalize">{{ session('user_name') }}</h4>
+                                                <p class="text-muted">{{ session('user_mail') }}</p><a
+                                                    href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
+                                                    Profile</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">My Profile</a>
-                                        <a class="dropdown-item" href="#">My Balance</a>
-                                        <a class="dropdown-item" href="#">Inbox</a>
+                                        {{-- <a class="dropdown-item" href="#">My Balance</a>
+                                        <a class="dropdown-item" href="#">Inbox</a> --}}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Account Setting</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Logout</a>
+                                        <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                     </li>
                                 </div>
                             </ul>
@@ -222,13 +225,15 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-2">
-                            <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                            <img src="{{ Storage::url(session('user_photo')) }}" alt="{{ session('user_name') }}"
+                                class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
                             <a>
                                 <span>
-                                    Hizrian
-                                    <span class="user-level">Administrator</span>
+                                    {{ session('user_name') }}
+                                    <span class="user-level"
+                                        style="text-transform: capitalize">{{ session('user_role') }}</span>
                                 </span>
                             </a>
                         </div>
@@ -239,26 +244,26 @@
                             $path = parse_url($url, PHP_URL_PATH);
                         @endphp
 
-                        <li class="nav-item {{ $path == '' ? 'active' : '' }}">
+                        <li class="nav-item {{ $path == '/dashboard' ? 'active' : '' }}">
                             <a href="{{ route('dashboard') }}" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item {{ $path == '/pembayaran' ? 'active' : '' }}">
-                            <a href="{{ route('pembayaran') }}">
+                            <a href="{{ route('pembayaran.index') }}">
                                 <i class="fas fa-hand-holding-usd"></i>
                                 <p>Pembayaran</p>
                             </a>
                         </li>
                         <li class="nav-item {{ $path == '/data-pembayaran' ? 'active' : '' }}">
-                            <a href="{{ route('data-pembayaran') }}">
+                            <a href="{{ route('data-pembayaran.index') }}">
                                 <i class="far fa-calendar-alt"></i>
                                 <p>Data Pembayaran </p>
                             </a>
                         </li>
                         <li class="nav-item {{ $path == '/users' ? 'active' : '' }}">
-                            <a href="{{ route('users') }}">
+                            <a href="{{ route('users.index') }}">
                                 <i class="fas fa-user-friends"></i>
                                 <p>Data User</p>
                             </a>
@@ -274,17 +279,17 @@
                                 id="tables">
                                 <ul class="nav nav-collapse">
                                     <li class="{{ $path == '/manajemen-data/tahun-akademik' ? 'active' : '' }}">
-                                        <a href="{{ route('tahun-akademik') }}">
+                                        <a href="{{ route('tahun-akademik.index') }}">
                                             <span class="sub-item">Tahun Akademik</span>
                                         </a>
                                     </li>
                                     <li class="{{ $path == '/manajemen-data/kelas' ? 'active' : '' }}">
-                                        <a href="{{ route('kelas') }}">
+                                        <a href="{{ route('kelas.index') }}">
                                             <span class="sub-item">Kelas</span>
                                         </a>
                                     </li>
                                     <li class="{{ $path == '/manajemen-data/pembayaran-perbulan' ? 'active' : '' }}">
-                                        <a href="{{ route('pembayaran-perbulan') }}">
+                                        <a href="{{ route('pembayaran-perbulan.index') }}">
                                             <span class="sub-item">Pembayaran Perbulan</span>
                                         </a>
                                     </li>
@@ -372,8 +377,7 @@
         <!-- End Custom template -->
     </div>
 
-    @yield('script')
-
+    <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
@@ -398,6 +402,9 @@
     <!-- Atlantis DEMO methods, don't include it in your project! -->
     <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
     <script src="{{ asset('assets/js/demo.js') }}"></script>
+
+
+    @yield('script')
 </body>
 
 </html>
