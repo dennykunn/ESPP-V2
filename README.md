@@ -1,66 +1,211 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ESPP - Sistem Pembayaran SPP
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**ESPP (E-Sistem Pembayaran SPP)** adalah aplikasi web untuk manajemen administrasi pembayaran SPP di **SMK Taruna Persada Dumai**. Aplikasi ini dibangun menggunakan framework Laravel dan menyediakan fitur pengelolaan data pembayaran, manajemen user multi-role, serta pengelolaan data akademik.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tech Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Teknologi           | Versi | Keterangan                         |
+| ------------------- | ----- | ---------------------------------- |
+| **PHP**             | ^8.1  | Bahasa pemrograman utama           |
+| **Laravel**         | 10.x  | Framework backend                  |
+| **MySQL**           | -     | Database relasional                |
+| **Laravel Sanctum** | ^3.3  | API authentication                 |
+| **Livewire**        | ^3.4  | Komponen interaktif                |
+| **Blade**           | -     | Template engine Laravel            |
+| **Bootstrap**       | -     | CSS framework (via Atlantis theme) |
+| **jQuery**          | -     | JavaScript library                 |
+| **DataTables**      | -     | Tabel interaktif                   |
+| **Vite**            | ^5.0  | Frontend build tool                |
+| **Toastr**          | ^2.3  | Notifikasi toast                   |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Autentikasi** — Login & logout untuk semua role
+- **Dashboard** — Halaman utama setelah login
+- **Pembayaran** — Halaman manajemen pembayaran SPP
+- **Data Pembayaran** — Melihat dan mengelola data pembayaran murid
+- **Manajemen User** — CRUD user dengan upload foto profil dan pengaturan password
+- **Manajemen Data**
+    - Tahun Akademik — Kelola data tahun ajaran
+    - Kelas — Kelola data kelas per tahun akademik
+    - Pembayaran Per Bulan — Kelola nominal pembayaran per bulan
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Role Pengguna
 
-## Laravel Sponsors
+| Role            | Keterangan                   |
+| --------------- | ---------------------------- |
+| `administrator` | Admin dengan akses penuh     |
+| `petugas`       | Petugas administrasi sekolah |
+| `walikelas`     | Wali kelas                   |
+| `walimurid`     | Wali murid / orang tua       |
+| `murid`         | Siswa                        |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Struktur Database
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+| Tabel                  | Keterangan                                             |
+| ---------------------- | ------------------------------------------------------ |
+| `users`                | Data pengguna (username, fullname, email, photo, role) |
+| `tahun_akademiks`      | Data tahun akademik (kode tahun ajaran)                |
+| `kelas`                | Data kelas, terhubung ke tahun akademik                |
+| `pembayaran_perbulans` | Nominal pembayaran per bulan dan tahun                 |
+| `students`             | Data siswa (NISN, nama, tanggal lahir)                 |
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Prasyarat
 
-## Code of Conduct
+Pastikan sistem kamu sudah memiliki:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **PHP** >= 8.1
+- **Composer** >= 2.x
+- **Node.js** >= 18.x & **npm**
+- **MySQL** >= 5.7 atau **MariaDB** >= 10.3
+- **Git**
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Instalasi
 
-## License
+### 1. Clone Repository
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+git clone https://github.com/username/ESPP-V2.git
+cd ESPP-V2
+```
+
+### 2. Install Dependensi
+
+```bash
+composer install
+npm install
+```
+
+### 3. Konfigurasi Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Edit file `.env` dan sesuaikan konfigurasi database:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=espp_v2
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 4. Setup Database
+
+```bash
+php artisan migrate
+php artisan db:seed
+```
+
+### 5. Storage Link
+
+```bash
+php artisan storage:link
+```
+
+### 6. Jalankan Aplikasi
+
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan di `http://localhost:8000`.
+
+---
+
+## Akun Default (Seeder)
+
+| Role          | Email            | Password     |
+| ------------- | ---------------- | ------------ |
+| Murid         | Denny@gmail.com  | denny12345   |
+| Wali Murid    | Said@gmail.com   | Said12345    |
+| Administrator | admin@gmail.com  | admin12345   |
+| Wali Kelas    | juned@gmail.com  | juned12345   |
+| Petugas       | rahman@gmail.com | petugas12345 |
+
+> **Catatan:** Akun-akun ini hanya tersedia setelah menjalankan `php artisan db:seed`.
+
+---
+
+## Struktur Direktori
+
+```
+ESPP-V2/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── ManajemenData/       # Controller manajemen data
+│   │   │   ├── AuthController.php
+│   │   │   ├── MainController.php
+│   │   │   ├── PembayaranController.php
+│   │   │   ├── DataPembayaranController.php
+│   │   │   └── UsersController.php
+│   │   └── Middleware/
+│   └── Models/                      # Eloquent models
+├── database/
+│   ├── migrations/                  # Skema database
+│   └── seeders/                     # Data awal
+├── public/
+│   └── assets/                      # Atlantis theme (CSS, JS, img)
+├── resources/
+│   └── views/
+│       ├── layouts/                 # Layout master (simple & auth)
+│       ├── components/              # Komponen Blade reusable
+│       └── ...                      # Halaman per modul
+├── routes/
+│   ├── web.php                      # Route utama
+│   └── api.php                      # Route API (Sanctum)
+├── .env.example
+├── composer.json
+├── package.json
+└── vite.config.js
+```
+
+---
+
+## Perintah Berguna
+
+```bash
+# Menjalankan development server
+php artisan serve
+
+# Menjalankan Vite dev server (untuk asset bundling)
+npm run dev
+
+# Build asset untuk production
+npm run build
+
+# Menjalankan migration
+php artisan migrate
+
+# Menjalankan migration + seeder (reset)
+php artisan migrate:fresh --seed
+
+# Membersihkan cache
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
+
+---
+
+## Lisensi
+
+Project ini menggunakan lisensi [MIT](https://opensource.org/licenses/MIT).
